@@ -5,44 +5,86 @@ import (
 	"math/rand/v2"
 )
 
-func main() {
-	wordsDB := [...]string{
-		"fair", "good", "well", "fine",
-		"fail", "pass", "yoyo", "earn",
-		"wins", "mark", "make", "luck",
-		"wind", "fire", "take", "took",
-		"king", "eggs", "chan", "made",
-		"dare", "hell", "plan", "miss"}
+var WordsDB = [...]string{
+	"fair", "good", "well", "fine",
+	"fail", "pass", "yoyo", "earn",
+	"wins", "mark", "make", "luck",
+	"wind", "fire", "take", "took",
+	"king", "eggs", "chan", "made",
+	"dare", "hell", "plan", "miss"}
 
-	secret := wordsDB[rand.IntN(len(wordsDB))]
+func engine() {
 
-	var guess string
-	fmt.Print("guess the word: ")
+	secret := WordsDB[rand.IntN(len(WordsDB))]
+	letters := []rune(secret)
+	won := false
+	count := 6
+	for i := 0; i < count; i++ {
 
-	for {
-		_, err := fmt.Scan(&guess)
-		if err != nil {
+		var guess string
+		fmt.Print("guess the word: ")
+
+		for {
+			_, err := fmt.Scan(&guess)
+			if err != nil {
+				fmt.Println("\nInput ended. Exiting game.")
+				return
+
+			}
+
+			if len(guess) != 4 {
+				fmt.Println("Please enter a 4-letter word.")
+				continue
+			}
 			break
 		}
 
-		if len(guess) != 4{
-			fmt.Println("Please enter a 4-letter word.")
-			continue
-		}
-		break
-	}
-
-	letters := []rune(secret)
-	lettersguess := []rune(guess)
-
-	for i, letter := range letters {
-
-			if letter == lettersguess[i] {
-				fmt.Println("this letter is in the correct place", i)
-		}else if  {
-			
+		if guess == secret {
+			fmt.Println("Congrate You Win")
+			won = true
+			break
 		}
 
+		lettersguess := []rune(guess)
+
+		for i, guessletter := range lettersguess {
+
+			if guessletter == letters[i] {
+				fmt.Println(guessletter, "is in the correct place")
+				continue
+			}
+
+			found := false
+			for _, letter := range letters {
+				if guessletter == letter {
+					found = true
+					break
+				}
+			}
+
+			if found {
+				fmt.Println(guessletter, "is in the word but not in the correct place")
+			} else {
+				fmt.Println(guessletter, "is not in the word")
+			}
+		}
+
+		if !won {
+			fmt.Println("Wrong guess. Try another word.")
+			fmt.Println("The Word Was", secret)
+		}
+
 	}
+
+}
+
+func main() {
+	fmt.Println("Welcome to the Wordle game!")
+
+	// for i := 0; i < tryCount; i++ {
+	engine()
+	// }
+
+	fmt.Println("Thank you for playing!")
 
 }
