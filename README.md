@@ -47,7 +47,6 @@ These were identified in a review and are **intentionally not fixed yet**:
 - **Guesses aren't checked against `WordsDB`** — any 4-character token is accepted, unlike real Wordle which only allows known words.
 - **Feedback format differs from classic Wordle** — one line per letter in guess order, instead of a colored per-position row with greens shown before yellows.
 - **Misleading message on the last attempt** — "Wrong guess. Try another word." is printed even on attempt 6, right before the loss is announced.
-- **Typos** — "Congrate You Win" (Congratulations).
 - **Questionable dictionary entries** — e.g. `"chan"`, `"yoyo"` are not standard Wordle answers.
 
 ## Note

@@ -40,7 +40,7 @@ func engine() {
 		}
 
 		if guess == secret {
-			fmt.Println("Congrate You Win")
+			fmt.Println("Congratulations You Win")
 			won = true
 			break
 		}
