@@ -18,8 +18,8 @@ func engine() {
 	secret := WordsDB[rand.IntN(len(WordsDB))]
 	letters := []rune(secret)
 	won := false
-	count := 6
-	for i := 0; i < count; i++ {
+
+	for i := 0; i < 6; i++ {
 
 		var guess string
 		fmt.Print("guess the word: ")
@@ -46,18 +46,21 @@ func engine() {
 		}
 
 		lettersguess := []rune(guess)
+		Used := make([]bool, len(letters))
 
 		for i, guessletter := range lettersguess {
 
 			if guessletter == letters[i] {
 				fmt.Println(guessletter, "is in the correct place")
+				Used[i] = true
 				continue
 			}
 
 			found := false
-			for _, letter := range letters {
-				if guessletter == letter {
+			for j, letter := range letters {
+				if guessletter == letter && !Used[j] {
 					found = true
+					Used[j] = true
 					break
 				}
 			}
@@ -69,11 +72,13 @@ func engine() {
 			}
 		}
 
-		if !won {
-			fmt.Println("Wrong guess. Try another word.")
-			fmt.Println("The Word Was", secret)
-		}
+		fmt.Println("Wrong guess. Try another word.")
 
+	}
+
+	if !won {
+		fmt.Println("GG buddy but you lost.")
+		fmt.Println("The Word Was", secret)
 	}
 
 }
@@ -81,9 +86,7 @@ func engine() {
 func main() {
 	fmt.Println("Welcome to the Wordle game!")
 
-	// for i := 0; i < tryCount; i++ {
 	engine()
-	// }
 
 	fmt.Println("Thank you for playing!")
 
